@@ -2,7 +2,7 @@
 
 ## The problem
 
-You are migrating your legacy Rails application (;>) to a brand new,
+You are migrating your legacy Ruby on Rails web application (;>) to a brand new,
 shiny, Elixir + Phoenix version. URL structure of the old and new
 application mostly matches, but some of the pages changed their
 location. You need to keep the old URLs redirecting to new URLs because
@@ -47,7 +47,35 @@ And I needed to mount my plug in
 {: .language-elixir .prettyprint }
   plug ElixirCocktailUrlRedirects.RedirectsPlug, %{"/" => "/page"}
 
+In my case I am simply redirecting root URL to `/page`, but you can
+specify multiple values in a map, such as:
+
+{: .language-elixir .prettyprint }
+  plug ElixirCocktailUrlRedirects.RedirectsPlug, %{"/old/" => "/new/", "/old2/" => "/new2/"}
+
+
+
+For a complete reference, see [this commit on
+Github](https://github.com/amberbit/elixir_cocktail_url_redirects/commit/be5b8082613930f0c75a3762ad1bf9e28a7a0436)
+
+## Extra tips
+
+Your use case might be a bit more complicated. You might have a need to
+redirect by regexp or implement more complex redirect logic. Check out
+[Plug.Conn reference](http://hexdocs.pm/plug/Plug.Conn.html) and inspect
+list of plugs in your `endpoint.ex` to find a solution to your problem.
+You should be able to access URL parameters, session data, cookies and
+other information from your plug, if you really need it.
+
+If your redirects will be permanent, make sure your plug [is setting HTTP
+301 status code, instead of the default
+302](https://github.com/amberbit/elixir_cocktail_url_redirects/commit/a76736d4a8dbb555abe3f8688a3eb06dbe5faad1).
+
 Contributors:
 [Hubert Łępicki](mailto:hubert.lepicki@amberbit.com)
 [@hubertlepicki](http://twitter.com/hubertlepicki)
+
+This cocktail is licensed under [Creative Commons Attribution-ShareAlike 4.0 International (CC
+BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
+Drink responsibly.
 
