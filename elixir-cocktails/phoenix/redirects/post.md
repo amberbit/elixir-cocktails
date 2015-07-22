@@ -1,4 +1,4 @@
-# Handling URL redirects
+# Handling URL redirects in Phoenix with Plug
 
 ## The problem
 
@@ -20,8 +20,6 @@ your Phoenix application. Mine is called
 `ElixirCocktailUrlRedirects.RedirectsPlug` and I placed it under
 `lib/elixir_cocktail_url_redirects/redirects_plug.ex`:
 
-{: .language-elixir .prettyprint }
-    
     defmodule ElixirCocktailUrlRedirects.RedirectsPlug do
       import Plug.Conn
 
@@ -44,15 +42,11 @@ your Phoenix application. Mine is called
 And I needed to mount my plug in
 `lib/elixir_cocktail_url_redirects/endpoint.ex` with:
 
-{: .language-elixir .prettyprint }
-    
     plug ElixirCocktailUrlRedirects.RedirectsPlug, %{"/" => "/page"}
 
 In my case I am simply redirecting root URL to `/page`, but you can
 specify multiple values in a map, such as:
 
-{: .language-elixir .prettyprint }
-    
     plug ElixirCocktailUrlRedirects.RedirectsPlug, %{"/old/" => "/new/", "/old2/" => "/new2/"}
 
 For a complete reference, see [this commit on
