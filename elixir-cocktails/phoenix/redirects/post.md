@@ -21,6 +21,7 @@ your Phoenix application. Mine is called
 `lib/elixir_cocktail_url_redirects/redirects_plug.ex`:
 
 {: .language-elixir .prettyprint }
+    
     defmodule ElixirCocktailUrlRedirects.RedirectsPlug do
       import Plug.Conn
 
@@ -43,17 +44,16 @@ your Phoenix application. Mine is called
 And I needed to mount my plug in
 `lib/elixir_cocktail_url_redirects/endpoint.ex` with:
 
-
 {: .language-elixir .prettyprint }
-  plug ElixirCocktailUrlRedirects.RedirectsPlug, %{"/" => "/page"}
+    
+    plug ElixirCocktailUrlRedirects.RedirectsPlug, %{"/" => "/page"}
 
 In my case I am simply redirecting root URL to `/page`, but you can
 specify multiple values in a map, such as:
 
 {: .language-elixir .prettyprint }
-  plug ElixirCocktailUrlRedirects.RedirectsPlug, %{"/old/" => "/new/", "/old2/" => "/new2/"}
-
-
+    
+    plug ElixirCocktailUrlRedirects.RedirectsPlug, %{"/old/" => "/new/", "/old2/" => "/new2/"}
 
 For a complete reference, see [this commit on
 Github](https://github.com/amberbit/elixir_cocktail_url_redirects/commit/be5b8082613930f0c75a3762ad1bf9e28a7a0436)
