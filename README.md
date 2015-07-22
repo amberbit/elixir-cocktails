@@ -2,6 +2,8 @@
 
 ## Collection of recipes for mixing delicious web cocktails with Elixir and Phoenix
 
+[Start Reading Here](https://www.amberbit.com/elixir-cocktails/)
+
 [Phoenix](https://github.com/phoenixframework/phoenix) and [Ecto](https://github.com/elixir-lang/ecto)
 are very much usable libraries already. They
 also provide good documentation from the start. Technical documentation
