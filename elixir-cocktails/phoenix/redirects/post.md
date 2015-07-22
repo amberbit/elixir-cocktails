@@ -10,7 +10,7 @@ your visitors might have them bookarked. Google has also all your
 current URLs indexed, so it would be nice to point it to new locations
 when it crawls your web site next time.
 
-## Solution
+## The solution
 
 Create a custom [Plug](http://hexdocs.pm/plug) and use it in your
 endpoint.ex before your application's router even kicks in.
@@ -69,7 +69,4 @@ Contributors:
 [Hubert Łępicki](mailto:hubert.lepicki@amberbit.com)
 [@hubertlepicki](http://twitter.com/hubertlepicki)
 
-This cocktail is licensed under [Creative Commons Attribution-ShareAlike 4.0 International (CC
-BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
-Drink responsibly.
 
