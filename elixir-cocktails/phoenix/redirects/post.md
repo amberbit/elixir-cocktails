@@ -3,7 +3,7 @@
 ## The problem
 
 You are migrating your legacy Ruby on Rails web application (;>) to a brand new,
-shiny, [Elixir](http://elixir-lang.org) + [Phoenix](http://www.phoenixframework.com) version. URL structure of the old and new
+shiny, [Elixir](http://elixir-lang.org) + [Phoenix](http://www.phoenixframework.org) version. URL structure of the old and new
 application mostly matches, but some of the pages changed their
 location. You need to keep the old URLs redirecting to new URLs because
 your visitors might have them bookarked. Google has also all your
