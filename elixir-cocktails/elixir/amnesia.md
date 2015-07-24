@@ -12,17 +12,17 @@ To add Amnesia, edit your mix.exs and add a new dependency in function
         [{:amnesia, github: "meh/amnesia", tag: :master}]
     end
 
-After that, run
+After that, run:
 
     mix deps.get
 
-to download Amnesia
+to download Amnesia.
 
 ##Creating the database
 Let's create a database for battery status – so there will be a timestamp, a status – (e.g. “Charging”, “Discharging”) and a percentage. To use the database, we first have to create a file that will be used to create the database.
 
 
-To create database, add a new file “Database.ex” in your lib folder. Write it as follows:
+To create the database, add a new file “Database.ex” in your lib folder. Write it as follows:
 
     #Firstly, we have to require Amnesia to use defdatabase and deftable
     require Amnesia
@@ -35,19 +35,21 @@ To create database, add a new file “Database.ex” in your lib folder. Write i
 			@type t :: %Battery{timestamp: non_neg_integer, status: String.t, percentage: non_neg_integer}
 		end
     end
-Look out – it's not just “String”, it's “String.t”
+Look out – it's not just “String”, it's “String.t”.
 
 If you want to use another index, just add it as an option in deftable, e.g.
     
     deftable Battery, [:timestamp, :status, :percentage ], index: [:status], type: :ordered_set do 
 
 
-To install the database, run 
+To install the database, run:
 
     iex -S mix 
 
-in the terminal. We chose the disk mode of the database – the records will be saved on the disk. There is another option – database in RAM.
-The best option for installing the database – use Mix Tasks. For this example, we will write it in iex.
+in the terminal. 
+
+We chose the disk mode of the database – the records will be saved on the disk. There is another option – database in RAM.
+The best option for installing the database – use Mix Tasks. For this example, we will write it in iex:
 
     Interactive Elixir (1.0.5) - press Ctrl+C to exit (type h() ENTER for help)
     iex(1)> require Amnesia
@@ -67,7 +69,7 @@ Just remember – run it once, otherwise there will be errors like “:already_e
 
 #Reading and writing
 
-Reading from and writing to the database requires Amnesia.transaction. If you don't use it, there will be errors like
+Reading from and writing to the database requires Amnesia.transaction. If you don't use it, there will be errors like:
 
     ** (exit) {:aborted, :no_transaction}
 
@@ -89,7 +91,7 @@ Let's add some random values to the database:
 
 ##Reading from the database
 
-You can use read – its looks up a record with an index equal to the param (in this case it looks for the timestamp)
+You can use read – it looks up a record with an index equal to the param (in this case it looks for the timestamp):
 
     iex(1)> use Database
     [nil, nil, nil, nil, nil, nil]
@@ -98,7 +100,7 @@ You can use read – its looks up a record with an index equal to the param (in 
     ...(2)> end
     %Database.Battery{percentage: 67, status: "Charging", timestamp: 0}
 
-If there is no such a record with this index, the result is nil
+If there is no such a record with this index, the result is nil:
 
     iex(3)> Amnesia.transaction do
     ...(3)> Battery.read(2)
@@ -131,9 +133,3 @@ When we want to destroy the database (for example, a user wants to uninstall our
     13:59:42.791 [info]  Application mnesia exited: :stopped
     Amnesia.Schema.destroy
     :ok
-
-
-
-
-
-
