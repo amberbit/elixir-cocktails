@@ -31,6 +31,7 @@ To create file, add a new file “Database.ex” in your lib folder. Write it as
 Look out – it's not just “String”, it's “String.t”
 
 If you want to use another index, just add it as an option in deftable, e.g.
+    
     deftable Battery, [:timestamp, :status, :percentage ], index: [:status], type: :ordered_set do 
 
 
@@ -50,10 +51,12 @@ The best option for installing the database – use Mix Tasks. For this example,
     [:ok, :ok]
     iex(6)> Database.wait
     :ok
+
 Just remember – run it once, otherwise there will be errors like “:already_exists”!
 
 Reading and writing
 Reading from and writing to the database requires Amnesia.transaction. If you don't use it, there will be errors like
+
     ** (exit) {:aborted, :no_transaction}
 
 Writing to the database
@@ -73,7 +76,8 @@ Let's add some random values to the database.
 
 Reading from the database
 
-You can use read – its looks up a record with an index equal to the param (in this case it looks for the timestamp) 
+You can use read – its looks up a record with an index equal to the param (in this case it looks for the timestamp)
+
     iex(1)> use Database
     [nil, nil, nil, nil, nil, nil]
     iex(2)> Amnesia.transaction do
@@ -82,6 +86,7 @@ You can use read – its looks up a record with an index equal to the param (in 
     %Database.Battery{percentage: 67, status: "Charging", timestamp: 0}
 
 If there is no such a record with this index, the result is nil
+
     iex(3)> Amnesia.transaction do
     ...(3)> Battery.read(2)
     ...(3)> end
@@ -89,6 +94,7 @@ If there is no such a record with this index, the result is nil
 
 If we want to find records that meet the conditions (e.g. where percentage is in range(50..70) and we only want to know the status of the records (excluding the timestamp and the percentage)). When we found the records, we have to invoke the method Amnesia.Selection.values with param r – our query. Next we use IO.inspect on every record from the query.
 If we use “where”, we use the standard Elixir syntax, so words like “or” and “and”. 
+
     iex(3)> Amnesia.transaction do
     ...(3)> r = Battery.where percentage >= 50 and percentage <= 70, select: [status]
     ...(3)> r |> Amnesia.Selection.values |> Enum.each &IO.inspect(&1)
