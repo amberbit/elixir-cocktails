@@ -112,14 +112,14 @@ and change `create` action a little:
     changeset = Comment.changeset(new_comment, comment_params)
 
 Now creating comments works. You can change the rest of actions and templates the
-same way. 
+same way.
 
 ## Extra tips
 
-More mix tasks for generating files can be found on http://hexdocs.pm/phoenix/overview.html#modules_summary
+More mix tasks for generating files can be found in [Phoenix documentation](http://hexdocs.pm/phoenix/overview.html#modules_summary).
 
 Generated templates assign Bootstrap classes to page elements. You can
-find more about Bootstrap here: http://getbootstrap.com/
+find more about [Bootstrap here](http://getbootstrap.com/).
 
 
 Contributors:
