@@ -30,10 +30,10 @@ To create database, add a new file “Database.ex” in your lib folder. Write i
     
     defdatabase Database do
     	#We define a table, records will be sorted, the first element will be taken as an index
-	deftable Battery, [:timestamp, :status, :percentage ], type: :ordered_set do 
-		#Nice to have, we declare a struct that represents a record in the database
-		@type t :: %Battery{timestamp: non_neg_integer, status: String.t, percentage: non_neg_integer}
-	end
+		deftable Battery, [:timestamp, :status, :percentage ], type: :ordered_set do 
+			#Nice to have, we declare a struct that represents a record in the database
+			@type t :: %Battery{timestamp: non_neg_integer, status: String.t, percentage: non_neg_integer}
+		end
     end
 Look out – it's not just “String”, it's “String.t”
 
@@ -65,7 +65,7 @@ The best option for installing the database – use Mix Tasks. For this example,
 
 Just remember – run it once, otherwise there will be errors like “:already_exists”!
 
-##Reading and writing
+#Reading and writing
 
 Reading from and writing to the database requires Amnesia.transaction. If you don't use it, there will be errors like
 
@@ -105,7 +105,8 @@ If there is no such a record with this index, the result is nil
     ...(3)> end
     nil
 
-If we want to find records that meet the conditions (e.g. where percentage is in range(50..70) and we only want to know the status of the records (excluding the timestamp and the percentage)). When we found the records, we have to invoke the method Amnesia.Selection.values with param r – our query. Next we use IO.inspect on every record from the query.
+If we want to find records that meet the conditions (e.g. where percentage is in range (50..70) and we only want to know the status of the records (excluding the timestamp and the percentage)). 
+When we found the records, we have to invoke the method Amnesia.Selection.values with param r – our query. Next we use IO.inspect on every record from the query.
 If we use “where”, we use the standard Elixir syntax, so words like “or” and “and”. 
 
     iex(3)> Amnesia.transaction do
@@ -118,7 +119,7 @@ If we use “where”, we use the standard Elixir syntax, so words like “or”
     :ok
 
 ##Uninstalling the database
-
+When we want to destroy the database (for example, a user wants to uninstall our app), we use:
     iex(1)> Amnesia.start
     :ok
     iex(2)> Database.destroy
