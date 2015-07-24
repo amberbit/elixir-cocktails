@@ -76,13 +76,13 @@ views, templates, etc. The only thing we have to do manually at this
 point is inform our posts, that now they have comments! Let's edit the
 post model now.
 
-   schema "posts" do
+    schema "posts" do
       has_many :comments, CrudBasicApp.Comment
       field :title, :string
       field :body, :string
 
       timestamps
-   end
+    end
 
 That's it! Now it's possible to create a comment to post.
 
@@ -107,9 +107,9 @@ Let's add following line to our `CommentController`:
 
 and change `create` action a little:
 
-   new_post = Repo.get!(Post, comment_params["post_id"])
-   new_comment = build(new_post, :comments)
-   changeset = Comment.changeset(new_comment, comment_params)
+    new_post = Repo.get!(Post, comment_params["post_id"])
+    new_comment = build(new_post, :comments)
+    changeset = Comment.changeset(new_comment, comment_params)
 
 Now creating comments works. You can change the rest of actions and templates the
 same way. 
