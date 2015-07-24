@@ -6,7 +6,7 @@ Suppose you have to use a simple database in an elixir application. How to do th
 Use Amnesia, a simple wrapper of Erlang's mnesia database.
 
 ##Adding Amnesia to dependencies
-To add Amnesia, edit your mix.exs and add a new dependency in function
+To add Amnesia, edit your mix.exs and add a new dependency in function:
 
     defp deps do
         [{:amnesia, github: "meh/amnesia", tag: :master}]
