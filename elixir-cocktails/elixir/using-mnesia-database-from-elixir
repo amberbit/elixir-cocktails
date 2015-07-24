@@ -1,11 +1,15 @@
-#The problem
+#Using mnesia database from Elixir
 
-Suppose you have to use a simple database in an elixir application. How to do that?
+##The problem
+
+Suppose you have to use a simple database in an elixir application. You don't want to install anything else than Erlang and Elixir on your server. How to do that?
 
 ##The solution
-Use Amnesia, a simple wrapper of Erlang's mnesia database.
+
+Use [Amnesia](https://github.com/meh/amnesia), a simple wrapper of Erlang's [mnesia](http://www.erlang.org/doc/man/mnesia.html) database.
 
 ##Adding Amnesia to dependencies
+
 To add Amnesia, edit your mix.exs and add a new dependency in function:
 
     defp deps do
@@ -19,10 +23,10 @@ After that, run:
 to download Amnesia.
 
 ##Creating the database
+
 Let's create a database for battery status – so there will be a timestamp, a status – (e.g. “Charging”, “Discharging”) and a percentage. To use the database, we first have to create a file that will be used to create the database.
 
-
-To create the database, add a new file “Database.ex” in your lib folder. Write it as follows:
+To create the database, add a new file “Database.ex” in your `lib` folder. Write it as follows:
 
     #Firstly, we have to require Amnesia to use defdatabase and deftable
     require Amnesia
@@ -35,6 +39,7 @@ To create the database, add a new file “Database.ex” in your lib folder. Wri
 			@type t :: %Battery{timestamp: non_neg_integer, status: String.t, percentage: non_neg_integer}
 		end
     end
+
 Look out – it's not just “String”, it's “String.t”.
 
 If you want to use another index, just add it as an option in deftable, e.g.
@@ -121,6 +126,7 @@ If we use “where”, we use the standard Elixir syntax, so words like “or”
     :ok
 
 ##Uninstalling the database
+
 When we want to destroy the database (for example, a user wants to uninstall our app), we use:
 
     iex(1)> Amnesia.start
