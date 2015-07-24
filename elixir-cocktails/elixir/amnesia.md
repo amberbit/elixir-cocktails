@@ -19,7 +19,7 @@ After that, run
 to download Amnesia
 
 ##Creating the database
-Let's create a database for battery status – so there will be a timestamp, status – (e.g. “Charging”, “Discharging”) and percentage. To use the database, we first have to create a file that will be used to create the database.
+Let's create a database for battery status – so there will be a timestamp, a status – (e.g. “Charging”, “Discharging”) and a percentage. To use the database, we first have to create a file that will be used to create the database.
 
 
 To create database, add a new file “Database.ex” in your lib folder. Write it as follows:
@@ -105,7 +105,7 @@ If there is no such a record with this index, the result is nil
     ...(3)> end
     nil
 
-If we want to find records that meet the conditions (e.g. where percentage is in range (50..70) and we only want to know the status of the records (excluding the timestamp and the percentage)). 
+If we want to find records that meet the conditions (e.g. where the percentage is in range (50..70) and we only want to know the status of the records (excluding the timestamp and the percentage)). 
 When we found the records, we have to invoke the method Amnesia.Selection.values with param r – our query. Next we use IO.inspect on every record from the query.
 If we use “where”, we use the standard Elixir syntax, so words like “or” and “and”. 
 
@@ -120,6 +120,7 @@ If we use “where”, we use the standard Elixir syntax, so words like “or”
 
 ##Uninstalling the database
 When we want to destroy the database (for example, a user wants to uninstall our app), we use:
+
     iex(1)> Amnesia.start
     :ok
     iex(2)> Database.destroy
