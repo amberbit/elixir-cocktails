@@ -3,18 +3,20 @@
 ## The problem
 
 Suppose you want to store some temporarily key:value data, based on user
-selection or preferences. You want, that data, to be accessible after page refresh, until they reach their expiration date. Using the browser cookies, is the simplest way, you are possible to do that kind of things.
+selection or preferences. You want that data to be accessible after page refresh, until some future expiration date. 
 
 ## The solution
 
-We are going to use connection Plug([`Plug.Conn`](http://hexdocs.pm/plug/Plug.Conn.html)).
+Using browser cookies is the usual way of solving those sort of problems. We are going to use ([`Plug.Conn`](http://hexdocs.pm/plug/Plug.Conn.html)) to read and write cookies from our phoenix application.
 
 ### Writing cookies
 
-To write cookies, we need to use `Plug.Conn` function `put_resp_cookie(conn, key, value, opts \\ [])`. As an example, let's use basic `index` action
+To write a cookie, we need to use `Plug.Conn` function [`put_resp_cookie(conn, key, value, opts \\ [])`](http://hexdocs.pm/plug/Plug.Conn.html#put_resp_cookie/4). As an example, let's use basic `index` action
 
-##### Temporarily/session cookies
-By default, expiration time is set to browser session life time
+##### Temporary cookies
+
+By default, no expiration time is set, which means the cookies will
+be cleared when user closes the browser. Let's set two temporary/session cookies:
 
     def index(conn, _params) do
         conn = Plug.Conn.put_resp_cookie(conn, "first_cookie_key", "first_cookie_value")
@@ -22,7 +24,7 @@ By default, expiration time is set to browser session life time
         render conn, "index.html"
     end
 
-This solution will work properly, but we could make it look better, more "elixir way". Let's use pipeline operator:
+This solution works properly, but we could make it look better. More "elixir way" would be to use pipeline operator:
 
     def index(conn, _params) do
         conn
@@ -31,24 +33,12 @@ This solution will work properly, but we could make it look better, more "elixir
             |> render "index.html"
     end
 
-And this is it! We have already saved our cookie in the browser.
-
-##### Expiration time cookies
-To define expiration time, we need to add optional parameter `max_age`:
-
-    def index(conn, _params) do
-        time_in_secs_from_now = 7*24*60*60 # a week from now
-        conn
-            |> put_resp_cookie("first_cookie_key", "first_cookie_value", max_age: time_in_secs_from_now)
-            |> put_resp_cookie("second_cookie_value", "second_cookie_value", max_age: 24*60*60)
-            |> render "index.html"
-    end
-
-If we will set `max_age` with value `0`. The cookie will be deleted.
+And this is it! We have already saved our cookies in the browser.
 
 ### Reading cookies
 
-To read cookie, you need to use your Plug connection instance. For example, let's show it in the view:
+To read a cookie, you simply access `conn.cookies`, the data is already
+fetched, parsed and provided to you by Phoenix. For example, let's show the value of a cookie on a page:
 
 ###### Define proper function in your `web/views/page_view.ex` file
 
@@ -61,9 +51,29 @@ To read cookie, you need to use your Plug connection instance. For example, let'
     end
 
 ###### Call it in `web/templates/page/index.html.eex` template
-        <%= cookies(conn, "cookie_name") %>
+
+        <%= cookies(conn, "first_cookie_key") %>
+        <%= cookies(conn, "second_cookie_key") %>
+
+
+##### Cookie expiration time and persistent cookies
+
+To define expiration time, we need to add optional parameter `max_age`:
+
+    def index(conn, _params) do
+        time_in_secs_from_now = 7*24*60*60 # a week from now
+        conn
+            |> put_resp_cookie("first_cookie_key", "first_cookie_value", max_age: time_in_secs_from_now)
+            |> put_resp_cookie("second_cookie_value", "second_cookie_value", max_age: 24*60*60)
+            |> render "index.html"
+    end
+
+If we will set `max_age` with value `0`. You cannot specify infinite
+expiration time for cookies, but if you want to make the cookie really
+persistent, you can set it's expiration date to a few years from now.
 
 ## Extra tips
+
 More `put_resp_cookies` optional parameters you can find on http://hexdocs.pm/plug/Plug.Conn.html#put_resp_cookie/4
 
 You can use `Timex` Elixir dependency library, for easier setup of expiration time. Add `{:timex, "~> 0.16.2"}` to project `mix.exs` file which allows you to use `Date`, `Time`, `DateTime` and many other modules that will help you handle time conversions. In our case, we can use an example:
@@ -75,5 +85,9 @@ You can use `Timex` Elixir dependency library, for easier setup of expiration ti
 
     conn |> put_resp_cookie("first_cookie_key", "first_cookie_value", max_age: secs_to_expire_date)
 
-Contributors: [Hubert Łępicki](mailto:hubert.lepicki@amberbit.com) [Rafał Maksymczuk](mailto:rafal.maksymczuk@amberbit.com) [Wojciech Piekutowski](mailto:wojciech.piekutowski@amberbit.com)
+Contributors:
+
+[Rafał Maksymczuk](mailto:rafal.maksymczuk@amberbit.com)
+
+[Hubert Łępicki](mailto:hubert.lepicki@amberbit.com)
 
