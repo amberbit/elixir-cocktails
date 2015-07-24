@@ -5,8 +5,6 @@ Suppose you have to use a simple database in an elixir application. How to do th
 ##The solution
 Use Amnesia, a simple wrapper of Erlang's mnesia database.
 
-Let's create a database for battery status – so there will be a timestamp, status – (e.g. “Charging”, “Discharging”) and percentage. To use the database, we first have to create a file that will be used to create the database.
-
 ##Adding Amnesia to dependencies
 To add Amnesia, edit your mix.exs and add a new dependency in function
 
@@ -14,13 +12,16 @@ To add Amnesia, edit your mix.exs and add a new dependency in function
         [{:amnesia, github: "meh/amnesia", tag: :master}]
     end
 
-After that, run 
+After that, run
 
-    mix deps.get 
+    mix deps.get
 
 to download Amnesia
 
-##Creating 
+##Creating the database
+Let's create a database for battery status – so there will be a timestamp, status – (e.g. “Charging”, “Discharging”) and percentage. To use the database, we first have to create a file that will be used to create the database.
+
+
 To create database, add a new file “Database.ex” in your lib folder. Write it as follows:
 
     #Firstly, we have to require Amnesia to use defdatabase and deftable
