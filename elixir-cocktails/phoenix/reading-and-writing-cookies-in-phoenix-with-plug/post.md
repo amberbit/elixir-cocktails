@@ -55,6 +55,12 @@ fetched, parsed and provided to you by Phoenix. For example, let's show the valu
         <%= cookies(conn, "first_cookie_key") %>
         <%= cookies(conn, "second_cookie_key") %>
 
+##### Complete example
+
+The complete example application for this recipe is [available on
+GitHub](https://github.com/amberbit/elixir_cocktail_reading_and_writing_cookies).
+The relevant commit changes can [be found
+here](https://github.com/amberbit/elixir_cocktail_reading_and_writing_cookies/commit/ad88d823082cd29dd1975f15e3e1b3ac69b4388c).
 
 ##### Cookie expiration time and persistent cookies
 
