@@ -9,13 +9,19 @@ Let's create a database for battery status – so there will be a timestamp, sta
 
 ##Adding Amnesia to dependencies
 To add Amnesia, edit your mix.exs and add a new dependency in function
+
     defp deps do
         [{:amnesia, github: "meh/amnesia", tag: :master}]
     end
-After that, run mix deps.get to download Amnesia
 
-#Creating 
-To create file, add a new file “Database.ex” in your lib folder. Write it as follows:
+After that, run 
+
+    mix deps.get 
+
+to download Amnesia
+
+##Creating 
+To create database, add a new file “Database.ex” in your lib folder. Write it as follows:
 
     #Firstly, we have to require Amnesia to use defdatabase and deftable
     require Amnesia
@@ -35,7 +41,11 @@ If you want to use another index, just add it as an option in deftable, e.g.
     deftable Battery, [:timestamp, :status, :percentage ], index: [:status], type: :ordered_set do 
 
 
-To install the database, run iex -S mix in the terminal. We chose the disk mode of the database – the records will be saved on the disk. There is another option – database in RAM.
+To install the database, run 
+
+    iex -S mix 
+
+in the terminal. We chose the disk mode of the database – the records will be saved on the disk. There is another option – database in RAM.
 The best option for installing the database – use Mix Tasks. For this example, we will write it in iex.
 
     Interactive Elixir (1.0.5) - press Ctrl+C to exit (type h() ENTER for help)
@@ -54,13 +64,15 @@ The best option for installing the database – use Mix Tasks. For this example,
 
 Just remember – run it once, otherwise there will be errors like “:already_exists”!
 
-Reading and writing
+##Reading and writing
+
 Reading from and writing to the database requires Amnesia.transaction. If you don't use it, there will be errors like
 
     ** (exit) {:aborted, :no_transaction}
 
-Writing to the database
-Let's add some random values to the database. 
+##Writing to the database
+
+Let's add some random values to the database:
 
     iex(1)> use Database
     [nil, nil, nil, nil, nil, nil]
@@ -74,7 +86,7 @@ Let's add some random values to the database.
     %Database.Battery{percentage: 67, status: "Charging", timestamp: 0}
     %Database.Battery{percentage: 75, status: "Discharging", timestamp: 12}
 
-Reading from the database
+##Reading from the database
 
 You can use read – its looks up a record with an index equal to the param (in this case it looks for the timestamp)
 
@@ -104,7 +116,7 @@ If we use “where”, we use the standard Elixir syntax, so words like “or”
     ["Charging"]
     :ok
 
-Uninstalling the database
+##Uninstalling the database
 
     iex(1)> Amnesia.start
     :ok
