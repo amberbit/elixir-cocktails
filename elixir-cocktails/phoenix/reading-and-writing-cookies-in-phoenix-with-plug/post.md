@@ -13,7 +13,7 @@ Using browser cookies is the usual way of solving those sort of problems. We are
 
 To write a cookie, we need to use `Plug.Conn` function [`put_resp_cookie(conn, key, value, opts \\ [])`](http://hexdocs.pm/plug/Plug.Conn.html#put_resp_cookie/4). As an example, let's use basic `index` action
 
-##### Temporary cookies
+### Temporary cookies
 
 By default, no expiration time is set, which means the cookies will
 be cleared when user closes the browser. Let's set two temporary/session cookies:
@@ -40,7 +40,7 @@ And this is it! We have already saved our cookies in the browser.
 To read a cookie, you simply access `conn.cookies`, the data is already
 fetched, parsed and provided to you by Phoenix. For example, let's show the value of a cookie on a page:
 
-###### Define proper function in your `web/views/page_view.ex` file
+Define appropriate helper function in your `web/views/page_view.ex` file:
 
     defmodule App.PageView do
         use App.Web, :view
@@ -50,19 +50,19 @@ fetched, parsed and provided to you by Phoenix. For example, let's show the valu
         end
     end
 
-###### Call it in `web/templates/page/index.html.eex` template
+Call it in `web/templates/page/index.html.eex` template
 
         <%= cookies(conn, "first_cookie_key") %>
         <%= cookies(conn, "second_cookie_key") %>
 
-##### Complete example
+### Complete example
 
 The complete example application for this recipe is [available on
 GitHub](https://github.com/amberbit/elixir_cocktail_reading_and_writing_cookies).
 The relevant commit changes can [be found
 here](https://github.com/amberbit/elixir_cocktail_reading_and_writing_cookies/commit/ad88d823082cd29dd1975f15e3e1b3ac69b4388c).
 
-##### Cookie expiration time and persistent cookies
+### Cookie expiration time and persistent cookies
 
 To define expiration time, we need to add optional parameter `max_age`:
 
@@ -93,7 +93,5 @@ You can use `Timex` Elixir dependency library, for easier setup of expiration ti
 
 Contributors:
 
-[Rafał Maksymczuk](mailto:rafal.maksymczuk@amberbit.com)
-
-[Hubert Łępicki](mailto:hubert.lepicki@amberbit.com)
+[Rafał Maksymczuk](mailto:rafal.maksymczuk@amberbit.com), [Hubert Łępicki](mailto:hubert.lepicki@amberbit.com)
 
