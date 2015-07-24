@@ -48,7 +48,7 @@ To install the database, run:
 
 in the terminal. 
 
-We chose the disk mode of the database – the records will be saved on the disk. There is another option – database in RAM.
+We chose the disk mode of the database – the records will be saved on the disk. There is another option – a database in RAM.
 The best option for installing the database – use Mix Tasks. For this example, we will write it in iex:
 
     Interactive Elixir (1.0.5) - press Ctrl+C to exit (type h() ENTER for help)
@@ -133,3 +133,6 @@ When we want to destroy the database (for example, a user wants to uninstall our
     13:59:42.791 [info]  Application mnesia exited: :stopped
     Amnesia.Schema.destroy
     :ok
+
+Contributors:
+[Mateusz Bielawski](mailto: mateuszbielawski@outlook.com), [Jan Gromko](mailto:gromkojan@gmail.com)
