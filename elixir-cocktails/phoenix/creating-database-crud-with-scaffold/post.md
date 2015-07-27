@@ -6,15 +6,15 @@ Suppose you want to create some basic CRUD app. You want to quickly and easily g
 
 ## The solution
 
-The solution is to use one of Phoenix-specific mix tasks, which are
+The solution is to use one of Phoenix-specific `mix` tasks, which are
 already available within a newly-generated Phoenix app.
 
 ### Generating model with simple CRUD
 
 To generate a model and corresponding view, templates and controller we
-simply invoke mix phoenix.gen.html task.
+simply invoke `mix phoenix.gen.html` task.
 
-    mix phoenix.gen.html Post posts title body
+    mix phoenix.gen.html Post posts title body:text
 
 `Post` above is the module name, whereas `posts` is gonna be used as name for resources and schema. Other arguments are field names. As type wasn't provided, fields are gonna have default type - string.
 
@@ -27,10 +27,10 @@ The files generated include:
 - controller test
 - model test
 
-Now it's time for adding routes in our application router
-and migrating database. We are reminded about that every time we use
-phoenix.gen.html. To add proper routes to router,
-let's simply paste the generated line in browser scope in `web/router.ex`.
+The generator did not add, however, appropriate routing entries. Let's
+fix that. We are reminded about that (and the need to run migrations) every time we use
+phoenix.gen.html. To add proper routes to `router.ex`,
+let's edit our `web/router.ex` file:
 
     scope "/", CrudBasicApp do
       pipe_through :browser # Use the default browser stack
@@ -58,7 +58,7 @@ Feel free to start server and play a bit with managing posts.
 
     mix phoenix.server
 
-Posts can be found at `localhost:4000\posts`.
+Posts can be found at `http://localhost:4000/posts`.
 
 ### Adding related resource
 
@@ -70,7 +70,7 @@ create a resource belonging to another one:
 
     mix phoenix.gen.html Comment comments name content post:belongs_to
 
-As always, generator is doing great job. It took care of creating
+The generator is doing great job here too. It took care of creating
 relation with posts in database, put index on post_id and created proper
 views, templates, etc. The only thing we have to do manually at this
 point is inform our posts, that now they have comments! Let's edit the
@@ -112,23 +112,16 @@ and change `create` action a little:
     changeset = Comment.changeset(new_comment, comment_params)
 
 Now creating comments works. You can change the rest of actions and templates the
-same way. 
-
-### Complete example
-
-The complete example application for this recipe is [available on
-GitHub]().
-The relevant commit changes can [be found
-here]().
+same way.
 
 ## Extra tips
 
-More mix tasks for generating files can be found on http://hexdocs.pm/phoenix/overview.html#modules_summary
+More mix tasks for generating files can be found in [Phoenix documentation](http://hexdocs.pm/phoenix/overview.html#modules_summary).
 
 Generated templates assign Bootstrap classes to page elements. You can
-find more about Bootstrap here: http://getbootstrap.com/
+find more about [Bootstrap here](http://getbootstrap.com/).
 
 
 Contributors:
 
-[Dominika Kruk](mailto:dominika.kruk@amberbit.com), [Hubert Łępicki](mailto:hubert.lepicki@amberbit.com)
+[Dominika Kruk](mailto:dominika.kruk@amberbit.com)
