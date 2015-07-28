@@ -2,19 +2,20 @@
 
 ## The problem
 
-Suppose you want to have some form in your app. That form will have no connection with any database table. It could be for example a contact form, or some search form. You want to easily provide validations to your form.
+Suppose you want to have some form in your app. It could be a contact form, or some search form.
+That form will have no connection with any database table, but you want to provide some validation on fields.
 
 ## The solution
 
 The solution is to use `Ecto.Changeset` with `Ecto.Schema`, which are
-modules included normally within `Ecto.Model` and create a model without
-a database table.
+modules included normally within `Ecto.Model`. Using them, you will be able to create a model and a changeset without
+any database table.
 
 ### Creating model with no database connection
 
 We are going to create a simple contact form, with "First name", "Last
 name", "Email" and "Content" fields.
-Let's start by defining our "model" for a simple contact form.
+Let's start by defining our model for a simple contact form.
 
     defmodule FormTestApp.Form do
       use Ecto.Schema
@@ -46,7 +47,7 @@ Let's add this line to our module:
 
     import Ecto.Changeset
 
-And create our changeset the same way we would create it, if our module was standard, connected to database model.
+And create our changeset the same way we would for a standard, connected to database model.
 
     @required_fields ~w(last_name email content)
     @optional_fields ~w(first_name)
@@ -117,11 +118,11 @@ Just paste following line in controller:
 
 Now you can start server and see your simple form. You won't however be able
 to submit
-it yet, as we haven't defined proper route and action.
+it yet, as we haven't defined proper route and action for that.
 
 ### Providing action for submit
 
-As you can see, the form will be sent as POST request to our
+As you can see, the form will be sent as a POST request to our
 applications `page_path`. First we need to provide a proper
 route in our `web/router.ex`. Let's add it to browser
 scope:
@@ -143,12 +144,14 @@ The only thing left to do is adding action to controller.
     end
 
 Remember that you need to use `plug :scrub_params` in your controller,
-or else required params will be always validated as present.
+or else all params will be always validated as present (making
+validation on required params useless). Just paste following line in your
+controller.
 
     plug :scrub_params, "form" when action in [:create]
 
 If you are creating a real form for your app, you probably want to do
-something with users input once the `changeset` proves valid. Maybe you
+something with users input once the changeset proves valid. Maybe you
 want to send it as an email, or further process the data provided. As this is
 just a simple example, the only thing we added is a flash message
 informing about changeset being valid.
@@ -158,7 +161,8 @@ And that's it! Our simple form with no database table is ready to use.
 
 You can find more about modules we used in Phoenix documentation on [Ecto.Schema](http://hexdocs.pm/ecto/Ecto.Schema.html) and [Ecto.Changeset](http://hexdocs.pm/phoenix/overview.html#modules_summary).
 
-You can write custom validators and pass them to changeset using
+If you need to perform some unusual or complicated validations, remember
+that you can write custom validators and pass them to changeset using
 [validate_change](http://hexdocs.pm/ecto/Ecto.Changeset.html#validate_change/3) functions.
 
 
