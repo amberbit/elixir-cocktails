@@ -2,8 +2,10 @@
 
 ## The problem
 
-Suppose you want to have some form in your app. It could be a contact form, or some search form.
-That form will have no connection with any database table, but you want to provide some validation on fields.
+Suppose you wish to have some form in your app. It could be a
+contact form, or maybe a search form. You need to provide a couple
+validations on fields, but don't want the form to have any connection
+with database tables.
 
 ## The solution
 
